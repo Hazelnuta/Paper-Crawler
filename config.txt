@@ -1,0 +1,5 @@
+Start year(2007)
+End year(2017)
+Location(CHINA MAINLAND)(TAIWAN)(MACAU)(HONG KONG)
+Schema(Essential Science Indicators)
+ArticleType(Article)(Letter)(Review)
