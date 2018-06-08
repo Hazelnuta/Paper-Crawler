@@ -78,17 +78,22 @@ def write_db_for_PC(db_num):
                 continue
             if flag2 == 22:
                 item = item[0:len(item) - 1]
+            if item.find('wosUrl')!= -1:
+                item = item[:-8]
+                while item[-1] == '\"':
+                    item = item[:-1]
             item = '\"' + item
             item = item + '\"'
             sql = sql + item
             sql = sql + ','
+            #print item
         sql = sql[0:len(sql) - 2]
         sql = sql + "\")"
         try:
             conn.execute(sql)
         except Exception as e:
-            #print(e)
-            print line
+            print(e)
+            print line[6]
             pass
             # conn.commit()
     ori_file.close()
@@ -199,14 +204,14 @@ def get_info_by_RA(name, number):
         'origin': "https://incites.thomsonreuters.com",
         'upgrade-insecure-requests': "1",
         'content-type': "application/x-www-form-urlencoded",
-        'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36",
+        'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36",
         'accept': "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
         'referer': "https://incites.thomsonreuters.com/",
         'accept-encoding': "gzip, deflate, br",
         'accept-language': "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7",
-        'cookie': "JSESSIONID=9081AE8656BD8511AA1459DBD9A2C5AA; _ga=GA1.2.289101491.1519811490; _gid=GA1.2.1819402626.1519811490; USERNAME=\"hazelnut@sjtu.edu.cn\"; PSSID=\"A2-sJAf7CXZdbxxSfhBe4EcL3j4Z6qZTslnxx-18x2dwx2Fx2FOBEgWmdTsoix2BefrHXeAx3Dx3DgI5YeJXOKqgBLntQx2BeOjJQx3Dx3D-9vvmzcndpRgQCGPd1c2qPQx3Dx3D-wx2BJQh9GKVmtdJw3700KssQx3Dx3D\"; CUSTOMER_NAME=\"SHANGHAI JIAO TONG UNIV\"; E_GROUP_NAME=\"IC2 Platform\"; SUBSCRIPTION_GROUP_ID=\"242426\"; SUBSCRIPTION_GROUP_NAME=\"SHANGHAI JIAO TONG UNIVERSITY_Benchmarking\"; CUSTOMER_GROUP_ID=\"93841\"; ROAMING_DISABLED=\"false\"; ACCESS_METHOD=\"UNP\"; _gat=1; SECCONTEXT=fc71f218d7503f6128861dd9f322ed5e518b3884ab470d2d10e5598d1339457780bd2b417b8e74387b9f7bc72ae1a5a1350d835ed22c582e0a254c1af22bb59bba796a57482a24f77805ff3faba033a830e6d911835cb0b2ebc2903449a64d55b7775785ce2606fd857d510a624d633be02125cfe0c88e6174f5e4a5d1662e8ad3d07a8daaf3f54383bfc2be2a15878b0e5c1062b7c54f9d46164a6809ab80dd537b1891e24e9cb5bcae2c0551b63a5a94eec988a5ec5b0e48bf59198a424c2d8bafa4e44c6a33e39af18c8710784d4438b5ec4ff9409b056f6540b0d15d25f94bdfefc7e965073955cd3599af77403e42241eca41354b3f9ce67b30176f2356d1812dfe4fd070b0420f20bc33f1867348e646938e4db6b3309ebfbdd7d30eb82c50e56e2e82badc21ba6f2e5c5c6b8021faf86c2b446e22df2694f57b27fadef213dd832e0e169360af498e875456120a810fd1030dfecea440887517d049b9df85a4d80fc426a47f85247808acea02e5e5cc439b0e1dd235b379f245c2460d6972dd225ad54787f505cffc5ec7736923db4f98aad722dff20fddc1f2de16a6",
+        'cookie': "JSESSIONID=B174A778AF4E5EA0955D39CF8AECF025; _ga=GA1.2.1626134384.1526014950; _gid=GA1.2.314431314.1526014950; USERNAME=\"hazelnut@sjtu.edu.cn\"; PSSID=\"H3-b8er91Ez5x2FwCGnGatiRavAqIaHLPzALd-18x2dHZc1BbvQhu1TPTpUU0DGKQx3Dx3DpM4NQChEy0Vl6BB5Y3ZA0gx3Dx3D-9vvmzcndpRgQCGPd1c2qPQx3Dx3D-wx2BJQh9GKVmtdJw3700KssQx3Dx3D\"; CUSTOMER_NAME=\"SHANGHAI JIAO TONG UNIV\"; E_GROUP_NAME=\"IC2 Platform\"; SUBSCRIPTION_GROUP_ID=\"242426\"; SUBSCRIPTION_GROUP_NAME=\"SHANGHAI JIAO TONG UNIVERSITY_Benchmarking\"; CUSTOMER_GROUP_ID=\"93841\"; ROAMING_DISABLED=\"false\"; ACCESS_METHOD=\"UNP\"; SECCONTEXT=34b44ec82e72d56ddd6b588c3388abe41a41c42d16cdeebd212d6ca92435bc44b19f8fda89856e2477df0910a99e12cf96ce137a843879ef2d6b8b3e8c69f8a4b4ca70154744cd0303f78268fadbe6b6513363ed95542902eab9ed6dc812dedc1c9654dc3482081864eb64a65e13d61a165e71b8639831f550e7efbc29d517e1c73fda6b3613b8d07a79a1753aa26993009baf44f96401cf0f3ebf7168bf8190c71c55d3c9adc6f30b93ad545f707e4b0fece282f4213a5c2d2d15218914ebc9a22a123c5dd08cb94d821a084ba6d940d36d973f03d5f4eb558eb73c5d16a5916948a034d9a971b6d709e8c68f48fae4b0b6f057f524c7bac515c0d2d3c2bc6a6082bf8347d920b58b95f87ad47666d35d01aac9439cb1c820377143f043f9dec53b68c6f63f822eaba06bb2dc9090c0961d4ad53111b36800900804e8b227f3654f7ddbc2344bca0d7463bff01d12159c55c2063a39e4f55b4c980d2f56b2da5dcd45f9cbaf2becd06122b5fe933b08132053bf588726ca0ef125b0a7e5245328d0abeccdbb069aaddb2151e24fc01f2ab799e6f204410e8f878b36a99dbc6d5870c9b54a7fbec40981b1269572158a3886b25e0f5c6d7036d269029ce46af68501f1c69be3028c391a52d46d71eab6aba4788f9a8932688527eb7a7b677fb016618f815960831f03b514600cdbb71d2baaa7c7655bb4484782bc25323b43b28aff0dfbe664f2cc174bca68c25e0e25; _gat=1",
         'cache-control': "no-cache",
-        'postman-token': "87a92258-ab38-50b3-1184-e9230093861e"
+        'postman-token': "abbb3218-e2b6-278c-f2fd-fb750fc53ccb"
     }
     if threading.active_count() > 5:
         while number % 49 != int(100 * time.time()) % 49:
@@ -247,31 +252,43 @@ def get_RA(name, number):
     myfile.close()
     print(name + '.csv written already')
 
-def getMoreinfo(key, num, skip, name, number):
+def getMoreinfo(key, num, skip, name, number, year, order):
     url = "https://incites.thomsonreuters.com/incites-app/drilldowns/0/organization/dbd_39/data/export/csv"
     #querystring = {"skip": skip, "sortBy": "cites", "sortOrder": "desc", "take": num,"fileName": name, "key":key}
-    querystring = {"skip":skip, "sortBy": "cites", "sortOrder": "desc", "take": "10000", "fileName": name, "key": key}
+    if order == 1:
+        querystring = {"skip": skip, "sortBy": "cites", "sortOrder": "asc", "take": "10000", "fileName": name,
+                       "key": key}
+    else:
+        querystring = {"skip": skip, "sortBy": "cites", "sortOrder": "desc", "take": "10000", "fileName": name,
+                       "key": key}
     # payload = "{\"take\":10000000,\"skip\":0,\"sortBy\":\"timesCited\",\"sortOrder\":\"desc\",\"filters\":{\"location\":{\"is\":[\"CHINA MAINLAND\",\"TAIWAN\",\"MACAU\",\"HONG KONG\"]},\"personIdTypeGroup\":{\"is\":\"name\"},\"personIdType\":{\"is\":\"fullName\"},\"schema\":{\"is\":\"Essential Science Indicators\"},\"articletype\":{\"is\":[\"Article\",\"Letter\",\"Review\"]},\"period\":{\"is\":[2007,2017]}},\"pinned\":[],\"indicators\":[\"orgName\",\"rank\",\"percentCited\",\"prcntDocsIn99\",\"prcntDocsIn90\",\"prcntHighlyCitedPapers\",\"prcntHotPapers\",\"prcntIndCollab\",\"prcntIntCollab\",\"acadStaffStdnt\",\"acadStaffInt\",\"avrgPrcnt\",\"norm\",\"ncicountry\",\"avrgCitations\",\"location\",\"doctoral\",\"doctoralUndergrad\",\"docsCited\",\"esi\",\"hindex\",\"highlyCitedPapers\",\"impactRelToWorld\",\"instIncome\",\"intCollaborations\",\"jNCI\",\"level\",\"type\",\"papers\",\"papersInt\",\"resIncome\",\"resIncomeInd\",\"resReputGlob\",\"stateProvice\",\"stdntInt\",\"teachingReput\",\"the\",\"timesCited\",\"wosDocuments\",\"key\",\"seqNumber\",\"hasProfile\"]}"
     #curPayload1 = "params={\"filters\":{\"location\":{\"is\":[\"CHINA MAINLAND\",\"TAIWAN\",\"HONG KONG\",\"MACAU\"]},\"personIdTypeGroup\":{\"is\":\"name\"},\"personIdType\":{\"is\":\"fullName\"},\"schema\":{\"is\":\"Essential Science Indicators\"},\"articletype\":{\"is\":[\"Article\",\"Review\",\"Letter\"]},\"period\":{\"is\":[2007,2017]}},\"pinned\":[],\"dateInfo\":{\"exportDate\":\"2017-08-06\",\"wosDate\":\"2017-05-31\",\"deployDate\":\"2017-07-22\"}}"
     flag = payload.find("\"filters\"")
     flag1 = payload.find("pinned")
-    curPayload = "params={" + payload[flag: flag1 + 11] + "\"dateInfo\":{\"exportDate\":\"2017-08-06\",\"wosDate\":\"2017-05-31\",\"deployDate\":\"2017-07-22\"}}"
+    if year != 0:
+        flag2 = payload.find('20')
+        payload1 = payload[:flag2] + str(year) + ',' + str(year + 1) + payload[flag2 + 9:]
+    else:
+        payload1 = payload
+    curPayload = "params={" + payload1[flag: flag1 + 11] + "\"dateInfo\":{\"exportDate\":\"2017-08-06\",\"wosDate\":\"2017-05-31\",\"deployDate\":\"2017-07-22\"}}"
     headers = {
         'origin': "https://incites.thomsonreuters.com",
         'upgrade-insecure-requests': "1",
         'content-type': "application/x-www-form-urlencoded",
-        'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36",
+        'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
         'accept': "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
         'referer': "https://incites.thomsonreuters.com/",
         'accept-encoding': "gzip, deflate, br",
         'accept-language': "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7",
-        'cookie': "JSESSIONID=9081AE8656BD8511AA1459DBD9A2C5AA; _ga=GA1.2.289101491.1519811490; _gid=GA1.2.1819402626.1519811490; USERNAME=\"hazelnut@sjtu.edu.cn\"; PSSID=\"A2-sJAf7CXZdbxxSfhBe4EcL3j4Z6qZTslnxx-18x2dwx2Fx2FOBEgWmdTsoix2BefrHXeAx3Dx3DgI5YeJXOKqgBLntQx2BeOjJQx3Dx3D-9vvmzcndpRgQCGPd1c2qPQx3Dx3D-wx2BJQh9GKVmtdJw3700KssQx3Dx3D\"; CUSTOMER_NAME=\"SHANGHAI JIAO TONG UNIV\"; E_GROUP_NAME=\"IC2 Platform\"; SUBSCRIPTION_GROUP_ID=\"242426\"; SUBSCRIPTION_GROUP_NAME=\"SHANGHAI JIAO TONG UNIVERSITY_Benchmarking\"; CUSTOMER_GROUP_ID=\"93841\"; ROAMING_DISABLED=\"false\"; ACCESS_METHOD=\"UNP\"; _gat=1; SECCONTEXT=fc71f218d7503f6128861dd9f322ed5e518b3884ab470d2d10e5598d1339457780bd2b417b8e74387b9f7bc72ae1a5a1350d835ed22c582e0a254c1af22bb59bba796a57482a24f77805ff3faba033a830e6d911835cb0b2ebc2903449a64d55b7775785ce2606fd857d510a624d633be02125cfe0c88e6174f5e4a5d1662e8ad3d07a8daaf3f54383bfc2be2a15878b0e5c1062b7c54f9d46164a6809ab80dd537b1891e24e9cb5bcae2c0551b63a5a94eec988a5ec5b0e48bf59198a424c2d8bafa4e44c6a33e39af18c8710784d4438b5ec4ff9409b056f6540b0d15d25f94bdfefc7e965073955cd3599af77403e42241eca41354b3f9ce67b30176f2356d1812dfe4fd070b0420f20bc33f1867348e646938e4db6b3309ebfbdd7d30eb82c50e56e2e82badc21ba6f2e5c5c6b8021faf86c2b446e22df2694f57b27fadef213dd832e0e169360af498e875456120a810fd1030dfecea440887517d049b9df85a4d80fc426a47f85247808acea02e5e5cc439b0e1dd235b379f245c2460d6972dd225ad54787f505cffc5ec7736923db4f98aad722dff20fddc1f2de16a6",
+        'cookie': "_ga=GA1.2.1988740908.1527559100; _gid=GA1.2.501115603.1527559100; USERNAME=\"hazelnut@sjtu.edu.cn\"; CUSTOMER_NAME=\"SHANGHAI JIAO TONG UNIV\"; E_GROUP_NAME=\"IC2 Platform\"; SUBSCRIPTION_GROUP_ID=\"242426\"; SUBSCRIPTION_GROUP_NAME=\"SHANGHAI JIAO TONG UNIVERSITY_Benchmarking\"; CUSTOMER_GROUP_ID=\"93841\"; ROAMING_DISABLED=\"false\"; ACCESS_METHOD=\"UNP\"; _gat=1; JSESSIONID=CCCA0D0F2C717AE594199E625E609A41; PSSID=\"H1-D90zu5x2BmPnPHjHjHvjaqVeYZmjO3aaIm-18x2d4Z4Z6kWVnx2B4PrQKQ8eH2vwx3Dx3DyyZOoXUx2Fgq0uvKP57JBruQx3Dx3D-iyiHxxh55B2RtQWBj2LEuawx3Dx3D-1iOubBm4x2FSwJjjKtx2F7lAaQx3Dx3D\"; SECCONTEXT=a4e127693e537ca470fa3e0ca0932398b8ff9449dbef958eef72dc7b3e216f14188ba490ba80ccef20a295c4b4f072f8079c62c19d2bd961d0fc7ae7dbbb717d0bf5a12b86d8bcc7967ac9ae9b2151dea64ff8dec8b2bad7b005178896bb1fa2d28fb106d0f8b5e80b08c5e89e329a22697db49e7326dae37a3599b6dbf5292b15386d0daf34dc879dc30a4d5cca698e6d17ca9040456bc316a8cb1f0540fdf65b1c56f90e37f07ceff37948e71d89e09ffc153fa152d01172b362de9926463cc73c88d6d230bb3a9100b406fa87115772ed5cc901422a45148e61dc78312ca062da4f1f4cdbd11bfb5f2d6b3baaacf13fb6b99347b03e389afe5edf02c64e2389f07bed70f14227fe6d2c7b725b1e7326e0d64ea5c11089a1f47ca1624de53308f88c25310c3aeb932a4222a6b0690dee6176c77e2e031d82a960f74aa3184e32ad877d18f857450e46121206c24fbd5b01e8f75597f643694825c760ff5532711abf2925fdcfa41416484408bc4f70cce1bf5a050dabcad23c9661edbc16878ce7aa3a97cad0706392d4958a5560aa603d845657c3a19f83ff187d238d5ee9b65856884bde4c43d7b35419e6c55bd1e05c4ca9e2f84819ed72c80888978543f584088be6232c7c87671138020da1ccf9755008df263d7b3e573f61f3e0525c64c27812bd3621ab6a28da05466c45cce86d2cfeb7d456558335b82702af7111849529565e61d71ae16237402bcb8093; JSESSIONID=CB9C33241E20B71A0D3E9C7258989EF3; _ga=GA1.2.1988740908.1527559100; CUSTOMER_NAME=\"SHANGHAI JIAO TONG UNIV\"; ROAMING_DISABLED=\"false\"; _gid=GA1.2.242436379.1527747230; USERNAME=\"hazelnut@sjtu.edu.cn\"; PSSID=\"H2-2NqOi4YC6eL5cOB9VqufdMazkwod2Qnx2B-18x2dUE4r2u4PqmoPrQKQ8eH2vwx3Dx3DKh3mcv4TPYtO7vsgn6Jz8wx3Dx3D-iyiHxxh55B2RtQWBj2LEuawx3Dx3D-1iOubBm4x2FSwJjjKtx2F7lAaQx3Dx3D\"; E_GROUP_NAME=\"IC2 Platform\"; SUBSCRIPTION_GROUP_ID=\"242426\"; SUBSCRIPTION_GROUP_NAME=\"SHANGHAI JIAO TONG UNIVERSITY_Benchmarking\"; CUSTOMER_GROUP_ID=\"93841\"; ACCESS_METHOD=\"IP_ROAMING\"; SECCONTEXT=cc671d6c5028f4334aa537f7939cb6cda8548a0ba88db1d853522d889104a8bdd037b66fadb65699cdc09ad5721df7709148583b75fbde730a838ab59b7e9fcbe91a90c9eafadae11896f4318caafd54fbcf685bc02172879dd6dbec3273ed5c6ed8b6891f75e32768ac25ccbd6a13e24b76888e276c14c8b1576657543b0b5d935c3e1df429032ab983e071d69dcd930a1e5f8d37d0942d683467bd60382e255a486fdfaa26aae87146efbbb9a91700a7a0cd3418c9f7aed3ad1fc4df6a3f06956a1ce3c38d780d2deccd4c06a1a004e85675e73fa43ff542eedd77a6937d0c21a6d9019774d95a10f4a9f96fd5686e8135f0c780df6cd0e03c3dc6a0943864a2046ff87b6b18fcfbf44e2ffdf3729c0947113ccb94f98afe1f998978d0875b803792bd23e0cd0a69a05d107f247d41163f125574e3c84531808be16429e9c7e9dadc12f3b25f68f97234d9a6275c3f33fa82d56fa8b1ff006e4f55966c2320ddec24a50fee528cc25e17165becd27e28528a089ae79804e737f50579972afbdd5f5fd033ae1136193504d1b4bfc7f2dc746a83cf9d7ea2ccaa720bcf6d279a15fb01153d4ac579268ee3ab8d5016749a929e553b7ea6a5c1accc91007bb68c3d466e0137816757503543e5dd931a9dcd2afb44f2f22906e106bd8db8232b838698102c067fad75e90dc35e390827015d8cdb7363341d4db9b1f57e20e5fd8d722d17628376a07e22b5e9fb1c091a62; _gat=1",
         'cache-control': "no-cache",
-        'postman-token': "87a92258-ab38-50b3-1184-e9230093861e"
+        'postman-token': "d67865fe-7806-89a4-2c73-f7e602db5fe3"
     }
     if threading.active_count() > 5:
         while number%49 != int(100*time.time())%49:
             sleep(float(float(3)/50*threading.active_count()))
+    else:
+        sleep(1)
     response = requests.request("POST", url, data=curPayload, headers=headers, params=querystring)
     content = response.text
     paperList = content.split('\n')
@@ -281,6 +298,10 @@ def getMoreinfo(key, num, skip, name, number):
     if len(paperList) == 1 and paperList[0].find("WOS") == -1:
         print content
         return []
+    if len(paperList) == 0:
+        print name + ": got nothing this time"
+        sleep(30)
+        #print content
     print name+" get more papers: " + str(len(paperList))
     return paperList
 
@@ -325,15 +346,51 @@ def getRow(paper, location, name):
     return paperRow
 
 def getInfo(key, num, name, location, number):
+    print "now we're gonna get " + str(num) +" papers from " + name + ":)"
     paperList = []
-    times = int(num)/10000
-    for tm in range(times + 1):
-        skip = tm*10000
-        skip = str(skip)
-        paperList+=getMoreinfo(key, num, skip, name, number)
-    if len(paperList) < int(num) - 10:
-        getInfo(key, num, name, location, number)
-        return
+    if num >= 50000:
+        print "hard mode starts for " + name
+        for year in range(int(startYear), int(endYear)+1):
+            print name + ": "+str(year) + '-' + str(year + 1)
+            skip = 0
+            zero_count = 0
+            order = 0
+            this_time_count = 0
+            while True:
+                if len(paperList) >= num - 5:
+                    break
+                #print str(this_time_count)
+                if this_time_count >= 49990:
+                    print name + " ("+ str(year) + ", " + str(year + 1) + ")"+": reverse now:)"
+                    order = 1
+                    skip = 0
+                    this_time_count = 0
+                new_papers = getMoreinfo(key, num, skip, name, number, year, order)
+                skip += 10000
+                this_time_count += len(new_papers)
+                original_lenth = len(paperList)
+                for new_item in new_papers:
+                    if new_item not in paperList:
+                        paperList.append(new_item)
+                if original_lenth == len(paperList) and len(new_papers) != 0:
+                    break
+                if len(new_papers) < 9999 and len(new_papers) > 0:
+                    print (name + ' currently gets '+ str(len(paperList))+ ' papers')
+                    break
+                if len(new_papers) == 0:
+                    zero_count = zero_count + 1
+                    if zero_count == 3:
+                        break
+    else:
+        times = int(num)/10000
+        for tm in range(times + 1):
+            skip = tm*10000
+            skip = str(skip)
+            paperList += getMoreinfo(key, num, skip, name, number,0, 0)
+        if len(paperList) < num and len(paperList) > 0:
+            print name + ": seems like some papers have been lost and we have to do it again:("
+            getInfo(key, num, name, location, number)
+            return
     print (name + " current papers: " + str(len(paperList) - 1))
     filename = curPath + '\\' + name + '.csv'
     myfile = open(filename, 'wb')
@@ -409,7 +466,7 @@ def work(number):
             continue
         else:
             if option == 1:
-                getInfo(key, num, name, location, number)
+                getInfo(key, int(num), name, location, number)
             else:
                 get_RA(name, number)
             print (str(k + 1) + ' institutions already done')
@@ -443,7 +500,7 @@ myfile = open("config.txt", 'r')
 list = myfile.readlines()
 myfile.close()
 
-payload = "{\"take\":10000000,\"skip\":0,\"sortBy\":\"timesCited\",\"sortOrder\":\"desc\",\"filters\":{"
+payload = "{\"take\":10000,\"skip\":0,\"sortBy\":\"timesCited\",\"sortOrder\":\"desc\",\"filters\":{"
 
 startYear = list[0][-6:-2]
 endYear = list[1][-6:-2]
@@ -519,20 +576,21 @@ payload += ",\"period\":{\"is\":["
 payload += startYear
 payload += ','
 payload += endYear
-payload += "]}},\"pinned\":[],\"indicators\":[\"orgName\",\"rank\",\"percentCited\",\"prcntDocsIn99\",\"prcntDocsIn90\",\"prcntHighlyCitedPapers\",\"prcntHotPapers\",\"prcntIndCollab\",\"prcntIntCollab\",\"acadStaffStdnt\",\"acadStaffInt\",\"avrgPrcnt\",\"norm\",\"ncicountry\",\"avrgCitations\",\"location\",\"doctoral\",\"doctoralUndergrad\",\"docsCited\",\"esi\",\"hindex\",\"highlyCitedPapers\",\"impactRelToWorld\",\"instIncome\",\"intCollaborations\",\"jNCI\",\"level\",\"type\",\"papers\",\"papersInt\",\"resIncome\",\"resIncomeInd\",\"resReputGlob\",\"stateProvice\",\"stdntInt\",\"teachingReput\",\"timesCited\",\"wosDocuments\",\"key\",\"seqNumber\",\"hasProfile\"]}"
+payload += "]}},\"pinned\":[],\"indicators\":[\"orgName\",\"rank\",\"wosDocuments\",\"norm\",\"timesCited\",\"percentCited\",\"percjifdocsq1\",\"percjifdocsq2\",\"percjifdocsq3\",\"percjifdocsq4\",\"prcntDocsIn99\",\"prcntDocsIn90\",\"prcntHighlyCitedPapers\",\"prcntHotPapers\",\"prcntIndCollab\",\"prcntIntCollab\",\"acadStaffStdnt\",\"acadStaffInt\",\"avrgPrcnt\",\"ncicountry\",\"avrgCitations\",\"location\",\"doctoral\",\"doctoralUndergrad\",\"docsCited\",\"jifdocs\",\"jifdocsq1\",\"jifdocsq2\",\"jifdocsq3\",\"jifdocsq4\",\"esi\",\"hindex\",\"highlyCitedPapers\",\"impactRelToWorld\",\"instIncome\",\"intCollaborations\",\"jNCI\",\"level\",\"type\",\"papers\",\"papersInt\",\"resIncome\",\"resIncomeInd\",\"resReputGlob\",\"stateProvice\",\"stdntInt\",\"teachingReput\",\"key\",\"seqNumber\",\"hasProfile\"]}"
 # payload = "{\"take\":10000000,\"skip\":0,\"sortBy\":\"timesCited\",\"sortOrder\":\"desc\",\"filters\":{\"location\":{\"is\":[\"CHINA MAINLAND\",\"TAIWAN\",\"MACAU\",\"HONG KONG\"]},\"personIdTypeGroup\":{\"is\":\"name\"},\"personIdType\":{\"is\":\"fullName\"},\"schema\":{\"is\":\"Essential Science Indicators\"},\"articletype\":{\"is\":[\"Article\",\"Letter\",\"Review\"]},\"period\":{\"is\":[2007,2017]}},\"pinned\":[],\"indicators\":[\"orgName\",\"rank\",\"percentCited\",\"prcntDocsIn99\",\"prcntDocsIn90\",\"prcntHighlyCitedPapers\",\"prcntHotPapers\",\"prcntIndCollab\",\"prcntIntCollab\",\"acadStaffStdnt\",\"acadStaffInt\",\"avrgPrcnt\",\"norm\",\"ncicountry\",\"avrgCitations\",\"location\",\"doctoral\",\"doctoralUndergrad\",\"docsCited\",\"esi\",\"hindex\",\"highlyCitedPapers\",\"impactRelToWorld\",\"instIncome\",\"intCollaborations\",\"jNCI\",\"level\",\"type\",\"papers\",\"papersInt\",\"resIncome\",\"resIncomeInd\",\"resReputGlob\",\"stateProvice\",\"stdntInt\",\"teachingReput\",\"the\",\"timesCited\",\"wosDocuments\",\"key\",\"seqNumber\",\"hasProfile\"]}"
 headers = {
     'accept': "application/json, text/plain, */*",
     'origin': "https://incites.thomsonreuters.com",
     'accept-language': "en",
-    'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36",
+    'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
     'content-type': "application/json;charset=UTF-8",
     'referer': "https://incites.thomsonreuters.com/",
     'accept-encoding': "gzip, deflate, br",
-    'cookie': "JSESSIONID=D45FD0C55DEDDC7FAE58ABE9CC516F2B; _ga=GA1.2.953928054.1520065904; _gid=GA1.2.1302978877.1520065904; _gat=1; USERNAME=\"hazelnut@sjtu.edu.cn\"; PSSID=\"B1-Axx1O7bImcaVTmx2BdCikKjZyUmK8TRhMiX-18x2dzIUOwLWjURMPrQKQ8eH2vwx3Dx3DR0ZaHPdVeOJIGwx2F3RUd7zQx3Dx3D-YwBaX6hN5JZpnPCj2lZNMAx3Dx3D-jywguyb6iMRLFJm7wHskHQx3Dx3D\"; CUSTOMER_NAME=\"SHANGHAI JIAO TONG UNIV\"; E_GROUP_NAME=\"IC2 Platform\"; SUBSCRIPTION_GROUP_ID=\"242426\"; SUBSCRIPTION_GROUP_NAME=\"SHANGHAI JIAO TONG UNIVERSITY_Benchmarking\"; CUSTOMER_GROUP_ID=\"93841\"; ROAMING_DISABLED=\"false\"; ACCESS_METHOD=\"IP_ROAMING\"; SECCONTEXT=a76a6048f32c73978f1fb465cb57d4cab1a44d546aa2c1c3d5a1a4197406bf3e7bb1f73bfe9fabecbeb20c58b2f8825e4553f39ecf63cdddd09e99494d17e9a00fa6838dd96acb971682d1b79cd161ff539b671f2628e720ff81877a7178464b54d10700f23889d7d10824d113d2a39c5cb6ae2a583abbab43aa606638101ec29db0821838132c9028dc35352a4ba8bbecb7123af9db5c47a0222f8be8c8438977eb209cc133adf1e76580fe9820a96e0c8ea459611fcdff0c03ade56991a5aa12a8d8ecb495221af167ed2fb378176b19a01535cefa161de645f5865eda75c243cffc09fcb78be2e85fd3580979b3fe37704a6b2c061ae0c27e0ea6e96a07dfe7aaa1d467a1d096af0fb7cb11c0ea284ca02c81306a74b6e42040928567b448939a0df16834ad2e1f642f1c29fa8e232ee50d8b4a2895204c754ae3e0037c75b7a6469071dcb4187108e865403ee2d97513e26797ae4b35b10928f87fa25eb6d468df0770debc42d2ac6cc86a5fc010ee0a57a1df145081309ce209a3afae359a7bc05cb242683534d2773d06e1c6253ee4b118ac3cfbae9067d809df12cb54",
+    'cookie': "_ga=GA1.2.1988740908.1527559100; _gid=GA1.2.501115603.1527559100; USERNAME=\"hazelnut@sjtu.edu.cn\"; CUSTOMER_NAME=\"SHANGHAI JIAO TONG UNIV\"; E_GROUP_NAME=\"IC2 Platform\"; SUBSCRIPTION_GROUP_ID=\"242426\"; SUBSCRIPTION_GROUP_NAME=\"SHANGHAI JIAO TONG UNIVERSITY_Benchmarking\"; CUSTOMER_GROUP_ID=\"93841\"; ROAMING_DISABLED=\"false\"; ACCESS_METHOD=\"UNP\"; _gat=1; JSESSIONID=CCCA0D0F2C717AE594199E625E609A41; PSSID=\"H1-D90zu5x2BmPnPHjHjHvjaqVeYZmjO3aaIm-18x2d4Z4Z6kWVnx2B4PrQKQ8eH2vwx3Dx3DyyZOoXUx2Fgq0uvKP57JBruQx3Dx3D-iyiHxxh55B2RtQWBj2LEuawx3Dx3D-1iOubBm4x2FSwJjjKtx2F7lAaQx3Dx3D\"; SECCONTEXT=a4e127693e537ca470fa3e0ca0932398b8ff9449dbef958eef72dc7b3e216f14188ba490ba80ccef20a295c4b4f072f8079c62c19d2bd961d0fc7ae7dbbb717d0bf5a12b86d8bcc7967ac9ae9b2151dea64ff8dec8b2bad7b005178896bb1fa2d28fb106d0f8b5e80b08c5e89e329a22697db49e7326dae37a3599b6dbf5292b15386d0daf34dc879dc30a4d5cca698e6d17ca9040456bc316a8cb1f0540fdf65b1c56f90e37f07ceff37948e71d89e09ffc153fa152d01172b362de9926463cc73c88d6d230bb3a9100b406fa87115772ed5cc901422a45148e61dc78312ca062da4f1f4cdbd11bfb5f2d6b3baaacf13fb6b99347b03e389afe5edf02c64e2389f07bed70f14227fe6d2c7b725b1e7326e0d64ea5c11089a1f47ca1624de53308f88c25310c3aeb932a4222a6b0690dee6176c77e2e031d82a960f74aa3184e32ad877d18f857450e46121206c24fbd5b01e8f75597f643694825c760ff5532711abf2925fdcfa41416484408bc4f70cce1bf5a050dabcad23c9661edbc16878ce7aa3a97cad0706392d4958a5560aa603d845657c3a19f83ff187d238d5ee9b65856884bde4c43d7b35419e6c55bd1e05c4ca9e2f84819ed72c80888978543f584088be6232c7c87671138020da1ccf9755008df263d7b3e573f61f3e0525c64c27812bd3621ab6a28da05466c45cce86d2cfeb7d456558335b82702af7111849529565e61d71ae16237402bcb8093; JSESSIONID=CB9C33241E20B71A0D3E9C7258989EF3; _ga=GA1.2.1988740908.1527559100; CUSTOMER_NAME=\"SHANGHAI JIAO TONG UNIV\"; ROAMING_DISABLED=\"false\"; _gid=GA1.2.242436379.1527747230; USERNAME=\"hazelnut@sjtu.edu.cn\"; PSSID=\"H2-2NqOi4YC6eL5cOB9VqufdMazkwod2Qnx2B-18x2dUE4r2u4PqmoPrQKQ8eH2vwx3Dx3DKh3mcv4TPYtO7vsgn6Jz8wx3Dx3D-iyiHxxh55B2RtQWBj2LEuawx3Dx3D-1iOubBm4x2FSwJjjKtx2F7lAaQx3Dx3D\"; E_GROUP_NAME=\"IC2 Platform\"; SUBSCRIPTION_GROUP_ID=\"242426\"; SUBSCRIPTION_GROUP_NAME=\"SHANGHAI JIAO TONG UNIVERSITY_Benchmarking\"; CUSTOMER_GROUP_ID=\"93841\"; ACCESS_METHOD=\"IP_ROAMING\"; SECCONTEXT=cc671d6c5028f4334aa537f7939cb6cda8548a0ba88db1d853522d889104a8bdd037b66fadb65699cdc09ad5721df7709148583b75fbde730a838ab59b7e9fcbe91a90c9eafadae11896f4318caafd54fbcf685bc02172879dd6dbec3273ed5c6ed8b6891f75e32768ac25ccbd6a13e24b76888e276c14c8b1576657543b0b5d935c3e1df429032ab983e071d69dcd930a1e5f8d37d0942d683467bd60382e255a486fdfaa26aae87146efbbb9a91700a7a0cd3418c9f7aed3ad1fc4df6a3f06956a1ce3c38d780d2deccd4c06a1a004e85675e73fa43ff542eedd77a6937d0c21a6d9019774d95a10f4a9f96fd5686e8135f0c780df6cd0e03c3dc6a0943864a2046ff87b6b18fcfbf44e2ffdf3729c0947113ccb94f98afe1f998978d0875b803792bd23e0cd0a69a05d107f247d41163f125574e3c84531808be16429e9c7e9dadc12f3b25f68f97234d9a6275c3f33fa82d56fa8b1ff006e4f55966c2320ddec24a50fee528cc25e17165becd27e28528a089ae79804e737f50579972afbdd5f5fd033ae1136193504d1b4bfc7f2dc746a83cf9d7ea2ccaa720bcf6d279a15fb01153d4ac579268ee3ab8d5016749a929e553b7ea6a5c1accc91007bb68c3d466e0137816757503543e5dd931a9dcd2afb44f2f22906e106bd8db8232b838698102c067fad75e90dc35e390827015d8cdb7363341d4db9b1f57e20e5fd8d722d17628376a07e22b5e9fb1c091a62; _gat=1",
     'cache-control': "no-cache",
-    'postman-token': "52d219d6-2dd5-6971-999f-724afa76d605"
+    'postman-token': "6261ce99-bab9-c137-daf8-d90ac97da178"
     }
+
 response = requests.request("POST", url, data=payload, headers=headers)
 content = response.text
 #print content
@@ -545,7 +603,8 @@ print ("totally " + str(TOTAL) + ' institutions.')
 print len(os.listdir(curPath))
 print TOTAL
 
-while (len(os.listdir(curPath)) < TOTAL):
+#while (len(os.listdir(curPath)) < TOTAL):
+while (len(os.listdir(curPath)) < 1000):
     varLock = threading.Lock()
     urllock = threading.Lock()
     q = Queue.Queue()
@@ -612,6 +671,10 @@ for FILE in paperFiles:
                 row[6] = row[6][1:]
             if len(row) == 21:
                 row = row[:8] + ['n/a'] + row[8:]
+            for index in range(len(row)):
+                if row[index] == 'wosUrl\'':
+                    print 'found one!'
+                    row = row[:index] + row[index + 1, :]
         else:
             row = [IDCounter] + row
         csv_writer.writerow(row)
